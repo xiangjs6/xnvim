@@ -1,4 +1,4 @@
-# xvim
+# xnvim
 安装neovim
 
 sudo pacman -S neovim
