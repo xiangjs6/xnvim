@@ -127,6 +127,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Yggdroot/indentLine'
+Plug 'morhetz/gruvbox'
+Plug 'xiangjs6/TermDebug'
 call plug#end()  
 
 " load vim default plugin
