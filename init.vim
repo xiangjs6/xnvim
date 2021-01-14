@@ -305,5 +305,4 @@ nnoremap <leader>gg :GV?<cr>
 
 " debug
 let g:vimspector_enable_mappings = 'HUMAN'
-nnoremap <F4> :call vimspector#Launch()<cr>
 nnoremap <F2> :call vimspector#Reset()<cr>
