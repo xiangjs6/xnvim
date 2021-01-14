@@ -128,7 +128,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'morhetz/gruvbox'
-Plug 'xiangjs6/TermDebug'
+Plug 'puremourning/vimspector'
 call plug#end()  
 
 " load vim default plugin
@@ -297,3 +297,5 @@ nnoremap <leader>g :GV<cr>
 nnoremap <leader>G :GV!<cr>
 nnoremap <leader>gg :GV?<cr>
 
+" debug
+let g:vimspector_enable_mappings = 'HUMAN'
