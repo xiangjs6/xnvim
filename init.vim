@@ -167,7 +167,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 
 " 主题设置
 set background=dark
-colorscheme onedark
+colorscheme gruvbox
 
 " 新建.h头文件
 autocmd BufNeWFile *.[h] exec ":call CFileHeader()"
@@ -221,8 +221,9 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 " change-colorscheme
-nnoremap <silent> <F9> :PreviousColorScheme<cr>
-nnoremap <silent> <F10> :NextColorScheme<cr>
+nnoremap <silent> - :PreviousColorScheme<cr>
+nnoremap <silent> + :NextColorScheme<cr>
+
 
 " prepare-code
 " let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
