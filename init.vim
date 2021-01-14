@@ -156,6 +156,11 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" tab标签页
+nnoremap <leader>N :tabnew<cr>
+nnoremap <leader><tab> :tabnext<cr>
+nnoremap <leader><s-tab> :tabprevious<cr>
+
 " 复制当前选中到系统剪切板
 vmap <leader>y "+y
 
