@@ -213,6 +213,9 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
+" ctrl+h可以将匹配的括号删除
+imap <c-h> <backspace>
+
 " airline
 let g:airline_theme="onedark"
 let g:airline_powerline_fonts = 1
