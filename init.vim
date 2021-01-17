@@ -47,7 +47,7 @@ set nofoldenable         " 禁用折叠代码
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set hlsearch            " 高亮显示搜索结果
+" set hlsearch            " 高亮显示搜索结果
 set incsearch           " 开启实时搜索功能
 set ignorecase          " 搜索时大小写不敏感
 
@@ -229,13 +229,12 @@ let g:airline_right_alt_sep = ''
 nnoremap <silent> - :PreviousColorScheme<cr>
 nnoremap <silent> + :NextColorScheme<cr>
 
-
 " prepare-code
 " let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
 " vim-buffer
-nnoremap <silent> <c-p> :PreviousBuffer<cr>
-nnoremap <silent> <c-n> :NextBuffer<cr>
+nnoremap <silent> <c-p> :PreviousBuffer<cr>g`"
+nnoremap <silent> <c-n> :NextBuffer<cr>g`"
 nnoremap <silent> <leader>d :CloseBuffer<cr>
 nnoremap <silent> <leader>D :BufOnly<cr>
 
@@ -257,6 +256,7 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+nnoremap <c-s> :set hlsearch<cr><Esc>
 
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
@@ -306,3 +306,5 @@ nnoremap <leader>gg :GV?<cr>
 " debug
 let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <F2> :call vimspector#Reset()<cr>
+nnoremap <F7> :call vimspector#StepOut()<cr>
+
