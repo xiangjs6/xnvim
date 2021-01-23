@@ -240,7 +240,9 @@ nnoremap <silent> + :NextColorScheme<cr>
 " vim-buffer
 nnoremap <silent> <c-p> :PreviousBuffer<cr>g`"
 nnoremap <silent> <c-n> :NextBuffer<cr>g`"
-nnoremap <silent> <leader>d :CloseBuffer<cr>
+" nnoremap <silent> <leader>d :CloseBuffer<cr>
+" 关闭buff时保持窗口
+nnoremap <silent> <leader>d :bp<bar>bd #<CR>
 nnoremap <silent> <leader>D :BufOnly<cr>
 
 " nerdtree
