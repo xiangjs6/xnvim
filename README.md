@@ -48,3 +48,5 @@ CocInstall coc-clangd
 CocInstall coc-python
 
 CocInstall coc-pairs
+
+CocInstall coc-neosnippet
