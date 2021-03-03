@@ -208,6 +208,9 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " inoremap <silent><expr> <c-j> pumvisible() ? coc#_select_confirm()
 "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" 括号换行
+inoremap <silent><expr> <c-j> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 " Use <c-p> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-p> coc#refresh()
