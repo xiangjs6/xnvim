@@ -212,6 +212,24 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 " 括号换行
 inoremap <silent><expr> <c-j> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" Using CocList
+" Show all diagnostics
+"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
 " Use <c-p> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-p> coc#refresh()
