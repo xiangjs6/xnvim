@@ -129,6 +129,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'Yggdroot/indentLine'
 Plug 'morhetz/gruvbox'
 Plug 'puremourning/vimspector'
+Plug 'preservim/nerdcommenter'
 call plug#end()  
 
 " load vim default plugin
