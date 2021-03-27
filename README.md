@@ -23,6 +23,10 @@ sudo pacman -S xsel
 
 安装pip
 
+方法1：
+sudo pacman -S python-pip
+
+方法2：
 wget https://bootstrap.pypa.io/get-pip.py
 
 sudo python get-pip.py
