@@ -109,7 +109,6 @@ Plug 'chxuan/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/incsearch.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -283,10 +282,7 @@ let g:NERDTreeDirArrowCollapsible='▼'
 let g:tagbar_width = 30
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
-" incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+" search
 nnoremap <c-s> :set hlsearch<cr><Esc>
 
 " vim-easymotion
