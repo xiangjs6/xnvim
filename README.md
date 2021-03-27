@@ -41,6 +41,10 @@ pip install pynvim
 
 pip install python-language-server
 
+安装字体
+
+sudo pacman -S nerd-fonts-dejavu-sans-mono
+
 安装coc插件
 
 CocInstall coc-clangd
