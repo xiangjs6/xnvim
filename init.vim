@@ -366,3 +366,8 @@ let g:mkdp_filetypes = ['markdown']
 nmap <space>s <Plug>MarkdownPreview
 nmap <space>S <Plug>MarkdownPreviewStop
 nmap <space>t <Plug>MarkdownPreviewToggle
+
+" terminal
+tnoremap <Esc> <C-\><C-n>
+tnoremap <M-[> <Esc>
+tnoremap <C-v><Esc> <Esc>
