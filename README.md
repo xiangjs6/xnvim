@@ -60,3 +60,11 @@ CocInstall coc-python
 CocInstall coc-pairs
 
 CocInstall coc-neosnippet
+
+CocInstall coc-marketplace #搜索访问coc扩展
+
+输入`:CocList marketplace`并搜索语言服务器，例如：
+
+* 输入python要查找的内容coc-jedi，
+* 输入php查找内容coc-phpls，等等。
+
