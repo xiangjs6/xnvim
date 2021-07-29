@@ -213,6 +213,16 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 " 括号换行
 inoremap <silent><expr> <c-j> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" GoTo code navigation.
+" If you want to keep your overrides in your vimrc instead of doing an after plugin,
+" you can use this "trick" anywhere in your vimrc file: `autocmd VimEnter * noremap <leader>cc echo "my purpose"`
+autocmd VimEnter * nmap <silent> gd <Plug>(coc-definition)
+autocmd VimEnter * nmap <silent> gy <Plug>(coc-type-definition)
+autocmd VimEnter * nmap <silent> gi <Plug>(coc-implementation)
+autocmd VimEnter * nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 " Using CocList
 " Show all diagnostics
 "nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
