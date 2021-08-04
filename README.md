@@ -17,6 +17,10 @@ sudo pacman -S icu
 
 sudo pacman -S nodejs yarn
 
+安装ack
+
+sudo pacman -S ack
+
 安装neovim系统剪切板依赖
 
 sudo pacman -S xsel
