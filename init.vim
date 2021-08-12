@@ -195,6 +195,14 @@ func PyFile()
         exec "$"
 endfunc
 
+" 提示80字符限制
+autocmd BufRead,BufNewFile *.asm,*.c,*.cpp,*.h,*.sh,*.py,*.vim
+            \ exec ":call Col80_tips()"
+func Col80_tips()
+    set colorcolumn=81
+    2match Underlined /.\%81v/
+endfunc
+
 " coc配置
 function! s:check_back_space() abort
   let col = col('.') - 1
