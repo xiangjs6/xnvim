@@ -129,6 +129,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'morhetz/gruvbox'
 Plug 'puremourning/vimspector'
 Plug 'preservim/nerdcommenter'
+Plug 'plasticboy/vim-markdown'
 call plug#end()  
 
 " load vim default plugin
@@ -358,4 +359,4 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <M-[> <Esc>
 tnoremap <C-v><Esc> <Esc>
 
-au FileType markdown let g:indentLine_setConceal= 0
+au FileType markdown let g:vim_markdown_conceal = 0
