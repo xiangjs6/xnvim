@@ -65,6 +65,8 @@ CocInstall coc-pairs
 
 CocInstall coc-neosnippet
 
+CocInstall coc-rime #中文输入法
+
 CocInstall coc-marketplace #搜索访问coc扩展
 
 输入`:CocList marketplace`并搜索语言服务器，例如：

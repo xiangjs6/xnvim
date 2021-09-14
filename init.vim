@@ -1,4 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ","      " 定义<leader>键
@@ -172,6 +171,12 @@ vnoremap <leader>p "+p
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
+" 配置insert模式的快捷鍵
+inoremap <c-l> <delete>
+inoremap <c-b> <left>
+inoremap <c-f> <right>
+imap <c-h> <backspace>
+
 " 主题设置
 set background=dark
 colorscheme gruvbox
@@ -256,9 +261,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
-" ctrl+h可以将匹配的括号删除
-imap <c-h> <backspace>
 
 " airline
 let g:airline_theme="onedark"
@@ -359,4 +361,5 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <M-[> <Esc>
 tnoremap <C-v><Esc> <Esc>
 
-au FileType markdown let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
