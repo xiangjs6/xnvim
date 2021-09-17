@@ -162,11 +162,17 @@ nnoremap <leader><tab> :tabnext<cr>
 nnoremap <leader><s-tab> :tabprevious<cr>
 
 " 复制当前选中到系统剪切板
-vmap <leader>y "+y
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+vnoremap <leader>y "+y
+vnoremap <leader>Y "+Y
+
 
 " 将系统剪切板内容粘贴到vim
 nnoremap <leader>p "+p
+nnoremap <leader>P "+P
 vnoremap <leader>p "+p
+vnoremap <leader>P "+P
 
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
@@ -363,3 +369,14 @@ tnoremap <C-v><Esc> <Esc>
 
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
+
+" indentLine
+" 关闭json双引号隐藏
+"let g:indentLine_setConceal = 2
+let g:indentLine_concealcursor = ""
+" let g:indentLine_setConceal = 0
+" let g:indentLine_fileTypeExclude = ['json']
+
+" nerdcommenter
+ autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
+ autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
