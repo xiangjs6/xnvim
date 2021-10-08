@@ -378,5 +378,8 @@ let g:indentLine_concealcursor = ""
 " let g:indentLine_fileTypeExclude = ['json']
 
 " nerdcommenter
- autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
- autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
+autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
+autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
+
+" coc-rime
+inoremap <silent> <c-c> <c-o>:CocCommand rime.toggle<CR>
