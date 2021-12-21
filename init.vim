@@ -242,10 +242,10 @@ autocmd VimEnter * nmap <silent> gi <Plug>(coc-implementation)
 autocmd VimEnter * nmap <silent> gr <Plug>(coc-references)
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <space>rn <Plug>(coc-rename)
 " Using CocList
 " Show all diagnostics
-"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 "nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
@@ -253,13 +253,15 @@ nmap <leader>rn <Plug>(coc-rename)
 " Find symbol of current document
 "nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 "nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 "nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+nnoremap <silent> <space>pp  :CocList --normal project<cr>
 
 " Use <c-p> to trigger completion.
 if has('nvim')
@@ -292,11 +294,12 @@ nnoremap <silent> <c-p> :PreviousBuffer<cr>g`"
 nnoremap <silent> <c-n> :NextBuffer<cr>g`"
 " nnoremap <silent> <leader>d :CloseBuffer<cr>
 " 关闭buff时保持窗口
-nnoremap <silent> <leader>d :bp<bar>bd #<CR>
+" nnoremap <silent> <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <silent> <leader>d :bp\|bd #<CR>
 nnoremap <silent> <leader>D :BufOnly<cr>
 
 " nerdtree
-nnoremap <silent> <leader>n :NERDTreeToggle<cr>
+nnoremap <silent> <leader>n :NERDTreeToggle `pwd`<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
