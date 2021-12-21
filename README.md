@@ -76,3 +76,13 @@ CocInstall coc-marketplace #搜索访问coc扩展
 * 输入python要查找的内容coc-jedi，
 * 输入php查找内容coc-phpls，等等。
 
+安装neovim remote
+
+pip3 install neovim-remote
+
+usage
+NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim
+
+nvr file1 file2
+nvr -l file3
+
