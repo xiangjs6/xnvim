@@ -18,6 +18,7 @@ set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 set relativenumber       " 设置相对位置
+language en_US.utf8      " 设置语言
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -101,10 +102,8 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 " 插件列表
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-Plug 'chxuan/change-colorscheme'
-Plug 'chxuan/vim-buffer'
 Plug 'mhinz/vim-startify'
-Plug 'chxuan/tagbar'
+Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
 Plug 'easymotion/vim-easymotion'
@@ -120,15 +119,19 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/vim-slash'
 Plug 'junegunn/gv.vim'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Yggdroot/indentLine'
+Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'puremourning/vimspector'
 Plug 'preservim/nerdcommenter'
 Plug 'plasticboy/vim-markdown'
+
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-orgmode/orgmode'
+
 call plug#end()  
 
 " load vim default plugin
@@ -136,19 +139,12 @@ runtime macros/matchit.vim
 
 " 编辑vimrc相关配置文件
 nnoremap <leader>e :edit $MYVIMRC<cr>
-nnoremap <leader>vc :edit ~/.vimrc.custom.config<cr>
-nnoremap <leader>vp :edit ~/.vimrc.custom.plugins<cr>
 
 " 打开当前光标所在单词的vim帮助文档
 nnoremap <leader>H :execute ":help " . expand("<cword>")<cr>
 
 " 重新加载vimrc文件
 nnoremap <leader>s :source $MYVIMRC<cr>
-
-" 安装、更新、删除插件
-nnoremap <leader><leader>i :PlugInstall<cr>
-nnoremap <leader><leader>u :PlugUpdate<cr>
-nnoremap <leader><leader>c :PlugClean<cr>
 
 " 分屏窗口移动
 nnoremap <c-j> <c-w>j
@@ -183,10 +179,14 @@ inoremap <c-b> <left>
 inoremap <c-f> <right>
 imap <c-h> <backspace>
 
+" 配置buffer操作
+nnoremap <silent> <leader>d :bp\|bd #<CR>
+nnoremap <silent> <leader>D :%bd\|e#\|bd#<cr>
+
+
 " 主题设置
 set background=dark
 colorscheme gruvbox
-"colorscheme onedark
 
 " 新建.h头文件
 autocmd BufNeWFile *.[h] exec ":call CFileHeader()"
@@ -208,12 +208,9 @@ func PyFile()
 endfunc
 
 " 提示80字符限制
-autocmd BufRead,BufNewFile *.asm,*.c,*.cpp,*.h,*.sh,*.py,*.vim
-            \ exec ":call Col80_tips()"
-func Col80_tips()
-    set colorcolumn=81
-    2match Underlined /.\%81v/
-endfunc
+autocmd BufWinEnter *.asm,*.c,*.cpp,*.h,*.sh,*.py,*.vim,*.cc
+            \ setlocal colorcolumn=81
+"autocmd BufWinLeave * setlocal colorcolumn=0
 
 " coc配置
 function! s:check_back_space() abort
@@ -261,14 +258,21 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> <space>pp  :CocList --normal project<cr>
-
 " Use <c-p> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-p> coc#refresh()
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+
+" coc-rime
+inoremap <silent> <c-c> <c-o>:CocCommand rime.toggle<CR>
+
+" coc-project
+nnoremap <silent> <space>pp  :CocList project<cr>
+
+" coc-terminal
+nmap <silent> <space>tt <Plug>(coc-terminal-toggle)
 
 " airline
 let g:airline_theme="onedark"
@@ -282,24 +286,8 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
-" change-colorscheme
-nnoremap <silent> - :PreviousColorScheme<cr>
-nnoremap <silent> + :NextColorScheme<cr>
-
-" prepare-code
-" let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
-
-" vim-buffer
-nnoremap <silent> <c-p> :PreviousBuffer<cr>g`"
-nnoremap <silent> <c-n> :NextBuffer<cr>g`"
-" nnoremap <silent> <leader>d :CloseBuffer<cr>
-" 关闭buff时保持窗口
-" nnoremap <silent> <leader>d :bp<bar>sp<bar>bn<bar>bd<CR>
-nnoremap <silent> <leader>d :bp\|bd #<CR>
-nnoremap <silent> <leader>D :BufOnly<cr>
-
 " nerdtree
-nnoremap <silent> <leader>n :NERDTreeToggle `pwd`<cr>
+nnoremap <silent> <leader>n :NERDTreeToggle %:p:h<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
@@ -309,7 +297,6 @@ let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 
 " tagbar
-let g:tagbar_width = 30
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " search
@@ -335,15 +322,16 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ }
 
 " LeaderF
-nnoremap <leader>f :LeaderfFile .<cr>
+nnoremap <leader>f :LeaderfFile %:p:h<cr>
 let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_UseCache = 0
+let g:Lf_CommandMap = {'<C-K>': ['<C-p>'], '<C-J>': ['<C-n>'], '<CR>' : ['<c-o>'], '<Del>' : ['<c-d>']}
 
 " ack
-nnoremap <leader>F :Ack!<space>
+nnoremap <leader>F :Ack!<space><space>%:p:h<s-left><left>
 
 " tabular
 nnoremap <leader>l :Tab /\|<cr>
@@ -384,5 +372,53 @@ let g:indentLine_concealcursor = ""
 autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
 autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
 
-" coc-rime
-inoremap <silent> <c-c> <c-o>:CocCommand rime.toggle<CR>
+"function! BnSkipTerm()
+  "let start_buffer = bufnr('%')
+  "bn
+  "while &buftype ==# 'terminal' && bufnr('%') != start_buffer
+    "bn
+  "endwhile
+"endfunction
+
+"nmap <leader>bn :call BnSkipTerm()<CR>
+
+
+"let g:org_agenda_files=['~/org/index.org']
+
+lua << EOF
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.org = {
+  install_info = {
+    url = 'https://github.com/milisims/tree-sitter-org',
+    revision = 'f110024d539e676f25b72b7c80b0fd43c34264ef',
+    files = {'src/parser.c', 'src/scanner.cc'},
+  },
+  filetype = 'org',
+}
+
+require'nvim-treesitter.configs'.setup {
+  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
+  highlight = {
+    enable = true,
+    disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+    additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
+  },
+  ensure_installed = {'org'}, -- Or run :TSUpdate org
+}
+
+require('orgmode').setup({
+  org_agenda_files = {'~/org/*'},
+  org_default_notes_file = '~/org/index.org',
+  org_todo_keywords = {'TODO', 'WAITING', '|', 'DONE', 'ABORT'}
+})
+EOF
+nnoremap <leader>oe :edit ~/org/index.org<cr>
+
+" 清除没有名字的空buffer 
+function! CleanNoNameEmptyBuffers()
+    let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val) < 0 && (getbufline(v:val, 1, "$") == [""])')
+    if !empty(buffers)
+        execute 'bd '.join(buffers, ' ')
+    endif
+endfunction
+autocmd BufWinLeave * exec ":call CleanNoNameEmptyBuffers()"
