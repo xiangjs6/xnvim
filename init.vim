@@ -106,7 +106,7 @@ Plug 'mhinz/vim-startify'
 Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
-Plug 'easymotion/vim-easymotion'
+Plug 'phaazon/hop.nvim'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -302,10 +302,9 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 " search
 nnoremap <c-s> :set hlsearch<cr><Esc>
 
-" vim-easymotion
-let g:EasyMotion_smartcase = 1
-map <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
+" hop
+lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', jump_on_sole_occurrence = false }
+nnoremap <leader>w :HopWordMW<cr>
 
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -363,27 +362,11 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " indentLine
 " 关闭json双引号隐藏
-"let g:indentLine_setConceal = 2
 let g:indentLine_concealcursor = ""
-" let g:indentLine_setConceal = 0
-" let g:indentLine_fileTypeExclude = ['json']
 
 " nerdcommenter
 autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
 autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
-
-"function! BnSkipTerm()
-  "let start_buffer = bufnr('%')
-  "bn
-  "while &buftype ==# 'terminal' && bufnr('%') != start_buffer
-    "bn
-  "endwhile
-"endfunction
-
-"nmap <leader>bn :call BnSkipTerm()<CR>
-
-
-"let g:org_agenda_files=['~/org/index.org']
 
 lua << EOF
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
@@ -421,4 +404,4 @@ function! CleanNoNameEmptyBuffers()
         execute 'bd '.join(buffers, ' ')
     endif
 endfunction
-autocmd BufWinLeave * exec ":call CleanNoNameEmptyBuffers()"
+"autocmd BufWinLeave * exec ":call CleanNoNameEmptyBuffers()"
