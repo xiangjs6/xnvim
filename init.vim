@@ -114,7 +114,6 @@ Plug 'godlygeek/tabular'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/vim-slash'
 Plug 'junegunn/gv.vim'
@@ -128,6 +127,7 @@ Plug 'morhetz/gruvbox'
 Plug 'puremourning/vimspector'
 Plug 'preservim/nerdcommenter'
 Plug 'plasticboy/vim-markdown'
+Plug 'dosimple/workspace.vim'
 
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-orgmode/orgmode'
@@ -152,10 +152,33 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" tab标签页
-nnoremap <leader>N :tabnew<cr>
-nnoremap <leader><tab> :tabnext<cr>
-nnoremap <leader><s-tab> :tabprevious<cr>
+" workspace
+nnoremap <silent> <leader><tab>1 :WS 1<CR>
+nnoremap <silent> <leader><tab>2 :WS 2<CR>
+nnoremap <silent> <leader><tab>3 :WS 3<CR>
+nnoremap <silent> <leader><tab>4 :WS 4<CR>
+nnoremap <silent> <leader><tab>5 :WS 5<CR>
+nnoremap <silent> <leader><tab>6 :WS 6<CR>
+nnoremap <silent> <leader><tab>7 :WS 7<CR>
+nnoremap <silent> <leader><tab>8 :WS 8<CR>
+nnoremap <silent> <leader><tab>9 :WS 9<CR>
+nnoremap <silent> <leader><tab>0 :WS 10<CR>
+
+nnoremap <silent> <leader><tab>t1 :WSbmv 1<CR>
+nnoremap <silent> <leader><tab>t2 :WSbmv 2<CR>
+nnoremap <silent> <leader><tab>t3 :WSbmv 3<CR>
+nnoremap <silent> <leader><tab>t4 :WSbmv 4<CR>
+nnoremap <silent> <leader><tab>t5 :WSbmv 5<CR>
+nnoremap <silent> <leader><tab>t6 :WSbmv 6<CR>
+nnoremap <silent> <leader><tab>t7 :WSbmv 7<CR>
+nnoremap <silent> <leader><tab>t8 :WSbmv 8<CR>
+nnoremap <silent> <leader><tab>t9 :WSbmv 9<CR>
+nnoremap <silent> <leader><tab>t0 :WSbmv 10<CR>
+
+nnoremap <silent> <leader><tab><tab> :call WS_Backforth()<CR>
+
+" Show info line about workspaces
+map <silent> <leader><tab>s :echo WS_Line()<CR>
 
 " 复制当前选中到系统剪切板
 nnoremap <leader>y "+y
@@ -232,7 +255,8 @@ inoremap <silent><expr> <c-j> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " GoTo code navigation.
 " If you want to keep your overrides in your vimrc instead of doing an after plugin,
-" you can use this "trick" anywhere in your vimrc file: `autocmd VimEnter * noremap <leader>cc echo "my purpose"`
+" you can use this "trick" anywhere in your vimrc file:
+" `autocmd VimEnter * noremap <leader>cc echo "my purpose"`
 autocmd VimEnter * nmap <silent> gd <Plug>(coc-definition)
 autocmd VimEnter * nmap <silent> gy <Plug>(coc-type-definition)
 autocmd VimEnter * nmap <silent> gi <Plug>(coc-implementation)
@@ -278,6 +302,7 @@ nmap <silent> <space>tt <Plug>(coc-terminal-toggle)
 let g:airline_theme="onedark"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 0
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -303,7 +328,8 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 nnoremap <c-s> :set hlsearch<cr><Esc>
 
 " hop
-lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', jump_on_sole_occurrence = false }
+lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran',
+                       \ jump_on_sole_occurrence = false }
 nnoremap <leader>w :HopWordMW<cr>
 
 " nerdtree-git-plugin
@@ -323,11 +349,13 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 " LeaderF
 nnoremap <leader>f :LeaderfFile %:p:h<cr>
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+            \ 'dir': ['.svn','.git','.hg','.vscode','.wine',
+                    \ '.deepinwine','.oh-my-zsh'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_UseCache = 0
-let g:Lf_CommandMap = {'<C-K>': ['<C-p>'], '<C-J>': ['<C-n>'], '<CR>' : ['<c-o>'], '<Del>' : ['<c-d>']}
+let g:Lf_CommandMap = {'<C-K>': ['<C-p>'], '<C-J>': ['<C-n>'],
+           \ '<CR>' : ['<c-o>'], '<Del>' : ['<c-d>']}
 
 " ack
 nnoremap <leader>F :Ack!<space><space>%:p:h<s-left><left>
@@ -368,6 +396,7 @@ let g:indentLine_concealcursor = ""
 autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
 autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
 
+" orgmode
 lua << EOF
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.org = {
@@ -380,11 +409,17 @@ parser_config.org = {
 }
 
 require'nvim-treesitter.configs'.setup {
-  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
+  -- If TS highlights are not enabled at all,
+  -- or disabled via `disable` prop,
+  -- highlighting will fallback to default Vim syntax highlighting
   highlight = {
     enable = true,
-    disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
-    additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
+    -- Remove this to use TS highlighter for some of
+    -- the highlights (Experimental)
+    disable = {'org'}, 
+    -- Required since TS highlighter doesn't support
+    -- all syntax features (conceal)
+    additional_vim_regex_highlighting = {'org'}, 
   },
   ensure_installed = {'org'}, -- Or run :TSUpdate org
 }
