@@ -1,3 +1,10 @@
 {
-    "rime.schemaId" : "luna_pinyin_simp"
+    //"rime.schemaId" : "luna_pinyin_simp"
+    "rime.schemaId" : "clover",
+	"list.insertMappings": {
+        "<C-o>": "action:open"
+	},
+	"list.normalMappings": {
+		"o": "action:open"
+	}
 }

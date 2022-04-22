@@ -103,7 +103,6 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
-Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
 Plug 'phaazon/hop.nvim'
@@ -128,6 +127,8 @@ Plug 'puremourning/vimspector'
 Plug 'preservim/nerdcommenter'
 Plug 'plasticboy/vim-markdown'
 Plug 'dosimple/workspace.vim'
+Plug 'liuchengxu/vista.vim'
+Plug 'xiangjs6/bclose.vim'
 
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-orgmode/orgmode'
@@ -202,10 +203,19 @@ inoremap <c-b> <left>
 inoremap <c-f> <right>
 imap <c-h> <backspace>
 
-" 配置buffer操作
-nnoremap <silent> <leader>d :bp\|bd #<CR>
+" 配置buffer操作 bclose
+let g:bclose_no_plugin_maps = 1
+nnoremap <silent> <leader>d :Bclose<CR>
 nnoremap <silent> <leader>D :%bd\|e#\|bd#<cr>
 
+
+" hide buffer quicklist and terminal
+autocmd BufEnter * if &buftype == 'terminal' | setlocal nobuflisted | endif
+
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
 
 " 主题设置
 set background=dark
@@ -296,7 +306,7 @@ inoremap <silent> <c-c> <c-o>:CocCommand rime.toggle<CR>
 nnoremap <silent> <space>pp  :CocList project<cr>
 
 " coc-terminal
-nmap <silent> <space>tt <Plug>(coc-terminal-toggle)
+nmap <silent> <space>te <Plug>(coc-terminal-toggle)
 
 " airline
 let g:airline_theme="onedark"
@@ -320,9 +330,6 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1 
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-
-" tagbar
-nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " search
 nnoremap <c-s> :set hlsearch<cr><Esc>
@@ -348,6 +355,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 
 " LeaderF
 nnoremap <leader>f :LeaderfFile %:p:h<cr>
+nnoremap <leader>b :LeaderfBuffer<cr>
 let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg','.vscode','.wine',
                     \ '.deepinwine','.oh-my-zsh'],
@@ -356,6 +364,22 @@ let g:Lf_WildIgnore = {
 let g:Lf_UseCache = 0
 let g:Lf_CommandMap = {'<C-K>': ['<C-p>'], '<C-J>': ['<C-n>'],
            \ '<CR>' : ['<c-o>'], '<Del>' : ['<c-d>']}
+let g:Lf_NormalMap = {
+    \ "_":      [["<C-n>", "j"],
+    \            ["<C-p>", "k"]
+    \           ],
+    \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+    \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+    \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+    \ "Tag":    [],
+    \ "BufTag": [],
+    \ "Function": [],
+    \ "Line":   [],
+    \ "History":[],
+    \ "Help":   [],
+    \ "Self":   [],
+    \ "Colorscheme": []
+    \}
 
 " ack
 nnoremap <leader>F :Ack!<space><space>%:p:h<s-left><left>
@@ -369,6 +393,12 @@ nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" command cli
+cnoremap <c-a> <home>
+cnoremap <c-b> <left>
+cnoremap <c-f> <right>
+cnoremap <c-l> <delete>
 
 " gv
 nnoremap <leader>g :GV<cr>
@@ -385,6 +415,7 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <M-[> <Esc>
 tnoremap <C-v><Esc> <Esc>
 
+" vim-markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
@@ -398,28 +429,17 @@ autocmd VimEnter * vmap <silent> <leader>cc <leader>c<space>
 
 " orgmode
 lua << EOF
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.org = {
-  install_info = {
-    url = 'https://github.com/milisims/tree-sitter-org',
-    revision = 'f110024d539e676f25b72b7c80b0fd43c34264ef',
-    files = {'src/parser.c', 'src/scanner.cc'},
-  },
-  filetype = 'org',
-}
 
+-- Load custom tree-sitter grammar for org filetype
+require('orgmode').setup_ts_grammar()
+
+-- Tree-sitter configuration
 require'nvim-treesitter.configs'.setup {
-  -- If TS highlights are not enabled at all,
-  -- or disabled via `disable` prop,
-  -- highlighting will fallback to default Vim syntax highlighting
+  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
   highlight = {
     enable = true,
-    -- Remove this to use TS highlighter for some of
-    -- the highlights (Experimental)
-    disable = {'org'}, 
-    -- Required since TS highlighter doesn't support
-    -- all syntax features (conceal)
-    additional_vim_regex_highlighting = {'org'}, 
+    disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+    additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
   },
   ensure_installed = {'org'}, -- Or run :TSUpdate org
 }
@@ -430,6 +450,7 @@ require('orgmode').setup({
   org_todo_keywords = {'TODO', 'WAITING', '|', 'DONE', 'ABORT'}
 })
 EOF
+
 nnoremap <leader>oe :edit ~/org/index.org<cr>
 
 " 清除没有名字的空buffer 
@@ -439,4 +460,53 @@ function! CleanNoNameEmptyBuffers()
         execute 'bd '.join(buffers, ' ')
     endif
 endfunction
-"autocmd BufWinLeave * exec ":call CleanNoNameEmptyBuffers()"
+autocmd BufWinLeave * exec ":call CleanNoNameEmptyBuffers()"
+
+" vista
+" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+" Note: this option only works for the kind renderer, not the tree renderer.
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" Executive used when opening vista sidebar without specifying it.
+" See all the avaliable executives via `:echo g:vista#executives`.
+let g:vista_default_executive = 'ctags'
+
+" Set the executive for some filetypes explicitly. Use the explicit executive
+" instead of the default one for these filetypes when using `:Vista` without
+" specifying the executive.
+let g:vista_executive_for = {
+  \ 'cc': 'coc',
+  \ 'c': 'coc',
+  \ 'cpp': 'coc',
+  \ 'py': 'coc',
+  \ }
+
+" Declare the command including the executable and options used to generate ctags output
+" for some certain filetypes.The file path will be appened to your custom command.
+" For example:
+let g:vista_ctags_cmd = {
+      \ 'haskell': 'hasktags -x -o - -c',
+      \ }
+
+" To enable fzf's preview window set g:vista_fzf_preview.
+" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+" For example:
+let g:vista_fzf_preview = ['right:50%']
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+autocmd FileType vista,vista_kind nmap <buffer> <silent> o <cr>
+
+nnoremap <silent> <space>tt :Vista!!<cr>
