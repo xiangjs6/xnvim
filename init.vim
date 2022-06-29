@@ -116,7 +116,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/vim-slash'
 Plug 'junegunn/gv.vim'
-Plug 'terryma/vim-smooth-scroll'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -133,6 +132,7 @@ Plug 'xiangjs6/bclose.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-orgmode/orgmode'
 
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()  
 
 " load vim default plugin
@@ -152,6 +152,9 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+" 删除不习惯的按键
+nnoremap <c-q> <nop>
 
 " workspace
 nnoremap <silent> <leader><tab>1 :WS 1<CR>
@@ -188,11 +191,12 @@ vnoremap <leader>y "+y
 vnoremap <leader>Y "+Y
 
 
-" 将系统剪切板内容粘贴到vim
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>p "+p
-vnoremap <leader>P "+P
+" 复制当前选中到系统剪切板和ssh剪切板中
+let g:oscyank_term = 'default'
+nnoremap <leader>y "+y:OSCYank<CR>
+nnoremap <leader>Y "+Y:OSCYank<CR> 
+vnoremap <leader>y "+y:OSCYank<CR> 
+vnoremap <leader>Y "+Y:OSCYank<CR>
 
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
@@ -278,9 +282,9 @@ nmap <space>rn <Plug>(coc-rename)
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
-"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 "nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
@@ -291,6 +295,11 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 "nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+"" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Use <c-p> to trigger completion.
 if has('nvim')
@@ -388,17 +397,13 @@ nnoremap <leader>F :Ack!<space><space>%:p:h<s-left><left>
 nnoremap <leader>l :Tab /\|<cr>
 nnoremap <leader>= :Tab /=<cr>
 
-" vim-smooth-scroll
-nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
 " command cli
 cnoremap <c-a> <home>
 cnoremap <c-b> <left>
 cnoremap <c-f> <right>
 cnoremap <c-l> <delete>
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
 
 " gv
 nnoremap <leader>g :GV<cr>
@@ -421,7 +426,10 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " indentLine
 " 关闭json双引号隐藏
+"let g:indentLine_setConceal = 2
 let g:indentLine_concealcursor = ""
+" let g:indentLine_setConceal = 0
+" let g:indentLine_fileTypeExclude = ['json']
 
 " nerdcommenter
 autocmd VimEnter * nmap <silent> <leader>cc <leader>c<space>
