@@ -184,13 +184,6 @@ nnoremap <silent> <leader><tab><tab> :call WS_Backforth()<CR>
 " Show info line about workspaces
 map <silent> <leader><tab>s :echo WS_Line()<CR>
 
-" 复制当前选中到系统剪切板
-nnoremap <leader>y "+y
-nnoremap <leader>Y "+Y
-vnoremap <leader>y "+y
-vnoremap <leader>Y "+Y
-
-
 " 复制当前选中到系统剪切板和ssh剪切板中
 let g:oscyank_term = 'default'
 nnoremap <leader>y "+y:OSCYank<CR>
