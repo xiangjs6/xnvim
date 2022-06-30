@@ -191,6 +191,12 @@ nnoremap <leader>Y "+Y:OSCYank<CR>
 vnoremap <leader>y "+y:OSCYank<CR> 
 vnoremap <leader>Y "+Y:OSCYank<CR>
 
+" 将系统剪切板内容粘贴到vim
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
