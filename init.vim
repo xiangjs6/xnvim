@@ -187,8 +187,8 @@ map <silent> <leader><tab>s :echo WS_Line()<CR>
 " 复制当前选中到系统剪切板和ssh剪切板中
 let g:oscyank_term = 'default'
 nnoremap <leader>y "+y:OSCYank<CR>
-nnoremap <leader>Y "+Y:OSCYank<CR> 
-vnoremap <leader>y "+y:OSCYank<CR> 
+nnoremap <leader>Y "+Y:OSCYank<CR>
+vnoremap <leader>y "+y:OSCYank<CR>
 vnoremap <leader>Y "+Y:OSCYank<CR>
 
 " 将系统剪切板内容粘贴到vim
@@ -288,6 +288,7 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 "nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>f  :<C-u>call CocAction("format")<cr>
 " Do default action for next item.
 "nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
