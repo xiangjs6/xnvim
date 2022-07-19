@@ -43,6 +43,8 @@ rm get-pip.py
 
 sudo pacman -S clang llvm-libs
 
+cp ./.clang-format ~/
+
 安装python-nvim
 
 pip install pynvim
