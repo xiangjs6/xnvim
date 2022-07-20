@@ -13,3 +13,4 @@ BraceWrapping:
     IndentBraces: false
 BreakBeforeBraces:	Custom
 IndentGotoLabels: false
+SortIncludes: false
