@@ -254,16 +254,15 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+inoremap <silent><expr> <C-p> coc#pum#visible() ?
+            \ coc#pum#prev(1) : coc#refresh()
+
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" inoremap <silent><expr> <c-j> pumvisible() ? coc#_select_confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \ coc#pum#visible() ? coc#_select_confirm() : "\<Tab>"
+
 " 括号换行
+ "inoremap <silent><expr> <c-j> coc#pum#visible() ? coc#_select_confirm()
+                               "\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <silent><expr> <c-j> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " GoTo code navigation.
@@ -300,13 +299,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocActionAsync('format')
-
-" Use <c-p> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-p> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
 
 " coc-rime
 inoremap <silent> <c-c> <c-o>:CocCommand rime.toggle<CR>
