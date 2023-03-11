@@ -186,10 +186,8 @@ map <silent> <leader><tab>s :echo WS_Line()<CR>
 
 " 复制当前选中到系统剪切板和ssh剪切板中
 let g:oscyank_term = 'default'
-nnoremap <leader>y "+y:OSCYank<CR>
-nnoremap <leader>Y "+Y:OSCYank<CR>
-vnoremap <leader>y "+y:OSCYank<CR>
-vnoremap <leader>Y "+Y:OSCYank<CR>
+vnoremap <leader>y "+y:OSCYankVisual<CR>
+vnoremap <leader>Y "+Y:OSCYankVisual<CR>
 
 " 将系统剪切板内容粘贴到vim
 nnoremap <leader>p "+p
