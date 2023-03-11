@@ -7,4 +7,5 @@
 	"list.normalMappings": {
 		"o": "action:open"
 	}
+    "diagnostic.warningSign": "!!"
 }
